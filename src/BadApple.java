@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 import java.io.FileReader;
 import java.io.BufferedReader;
 
-// 音乐
+// music
 class AudioPlayerExample1 implements LineListener {
 
     /**
@@ -106,8 +106,8 @@ class Listener implements ActionListener {
             fr = new FileReader(fileName);
             br = new BufferedReader(fr);
             String temp;
-            ArrayList<String> list=new ArrayList<>();
-            while((temp=br.readLine())!=null){
+            ArrayList<String> list = new ArrayList<>();
+            while ((temp = br.readLine()) != null) {
                 list.add(temp);
             }
 
@@ -115,8 +115,6 @@ class Listener implements ActionListener {
                     BadApple.frameList) {
                 f.panel.draw(list);
             }
-
-
         } catch (Exception e) {
             System.out.println(e);
         } finally {
@@ -133,35 +131,27 @@ class Listener implements ActionListener {
 
 
 class BadAppleFrame extends JFrame {
-    public static int NUM=1;
-
+    public static int NUM = 1;
     public BadApplePanel panel;
 
-
     public BadAppleFrame(String type, int lineSpace) {
-        int num=NUM;
+        int num = NUM;
         NUM++;
-
 
         panel = new BadApplePanel(type, lineSpace);
         getContentPane().add(panel);
 
-//        timer = new javax.swing.Timer(32, listener2);
-//        timer.addActionListener(listener);
 
-        setTitle("BadApple"+num);
+        setTitle("BadApple" + num);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(650, 510);
         setVisible(true);
-
     }
-
 
     class BadApplePanel extends JPanel {
         private String type;
         private int start, end, j, lineSpace;
         private ArrayList<String> list;
-
 
         public BadApplePanel(String type, int lineSpace) {
             this.type = type;
@@ -171,48 +161,39 @@ class BadAppleFrame extends JFrame {
 
         public void draw(ArrayList<String> list) {
             this.list = list;
-
-
             j = 0;
-
-
             repaint();
         }
 
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             String temp;
-            if(list==null){
+            if (list == null) {
                 return;
             }
 
-            for (j=0;  j< list.size(); j++) {
-                temp=list.get(j);
+            for (j = 0; j < list.size(); j++) {
+                temp = list.get(j);
                 StringTokenizer st = new StringTokenizer(temp);
                 while (st.hasMoreTokens()) {
                     start = Integer.parseInt(st.nextToken());
                     end = Integer.parseInt(st.nextToken());
 
-                    if(type.equals("pixel")){
+                    if (type.equals("pixel")) {
                         g.drawLine(start, j, end, j);
-                    }else if(type.equals("oval")){
+                    } else if (type.equals("oval")) {
                         if (j % lineSpace != 0) {
                             continue;
                         }
                         for (int k = 0; k < (end - start) / lineSpace; k++) {
 //                            g.fillOval(start + k * lineSpace, j, lineSpace, lineSpace);
-                            String s="!#$%^&*(abcdfertgs)_+-=ouyjkmIYHK{}|][;':";
-                            int ra=(int)(Math.random()*s.length());
-                            g.drawString(s.substring(ra,ra+1),start + k * lineSpace, j);
+                            String s = "!#$%^&*(abcdfertgs)_+-=ouyjkmIYHK{}|][;':";
+                            int ra = (int) (Math.random() * s.length());
+                            g.drawString(s.substring(ra, ra + 1), start + k * lineSpace, j);
                         }
                     }
-
                 }
-
             }
-
-
-
         }
     }
 
@@ -222,7 +203,6 @@ class BadAppleFrame extends JFrame {
 public class BadApple {
     public static ArrayList<BadAppleFrame> frameList;
 
-
     public static void main(String[] args) {
         BadApple.frameList = new ArrayList<>();
         frameList.add(new BadAppleFrame("pixel", 1));
@@ -231,13 +211,9 @@ public class BadApple {
 
         Timer timer = new javax.swing.Timer(32, listener);
 
-
         timer.start();
 
-        File directory = new File("");//设定为当前文件夹
-
         String audioFilePath = "res/BadApple.wav";
-
         AudioPlayerExample1 player = new AudioPlayerExample1();
         player.play(audioFilePath);
     }
